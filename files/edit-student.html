@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+      <title>Edit Students</title>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap">
+      <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+      <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+      <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+      <link rel="stylesheet" href="assets/css/style.css">
+   </head>
+   <body>
+      <div class="main-wrapper">
+
+       <!-- navbar starts -->
+
+         <div class="header">
+            <div class="header-left">
+               <a href="index.html" class="logo">
+               <!-- <img src="assets/img/logo.png" alt="Logo"> -->
+               </a>
+               <a href="index.html" class="logo logo-small">
+               <!-- <img src="assets/img/logo.png" alt="Logo" width="30" height="30"> -->
+               </a>
+            </div>
+            <a href="javascript:void(0);" id="toggle_btn">
+            <i class="fas fa-align-left"></i>
+            </a>
+            
+            <a class="mobile_btn" id="mobile_btn">
+            <i class="fas fa-bars"></i>
+            </a>
+            <ul class="nav user-menu">
+               <li class="nav-item dropdown noti-dropdown">
+                  <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                  <!-- <i class="far fa-bell"></i> <span class="badge badge-pill">3</span> -->
+                  </a>
+                  
+               </li>
+               <li class="nav-item dropdown has-arrow">
+                  <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                  <span class="user-img"><img class="rounded-circle" src="assets/img/user_male.jpg" width="31" alt="Ryan Taylor"></span>
+                  </a>
+                  <div class="dropdown-menu">
+                     <div class="user-header">
+                        <div class="avatar avatar-sm">
+                           <img src="assets/img/user_male.jpg" alt="User Image" class="avatar-img rounded-circle">
+                        </div>
+                        <div class="user-text">
+                           <h6>Arif Qasemi</h6>
+                           <p class="text-muted mb-0">Administrator</p>
+                        </div>
+                     </div>
+                     <a class="dropdown-item" href="profile.html">My Profile</a>
+                     <a class="dropdown-item" href="inbox.html">Inbox</a>
+                     <a class="dropdown-item" href="login.html">Logout</a>
+                  </div>
+               </li>
+            </ul>
+         </div>
+
+    <!-- navbar ends -->
+    
+
+
+    <!-- sidebar starts -->
+
+         <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+               <div id="sidebar-menu" class="sidebar-menu">
+                  <ul>
+                     <li class="menu-title">
+                        <span>Main Menu</span>
+                     </li>
+                     <li class="submenu">
+                        <a href="#"><i class="fa fa-desktop"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                           <li><a href="index.html">Admin Dashboard</a></li>
+                        </ul>
+                     </li>
+                     <li class="submenu active">
+                        <a href="#"><i class="fas fa-user-graduate"></i> <span> Students</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                           <li><a href="students.html">Student List</a></li>
+                           <li><a href="add-student.html"> Add Student</a></li>
+                        </ul>
+                     </li>
+               </div>
+            </div>
+         </div>
+
+        <!-- sidebar ends -->
+
+        <!-- main section starts -->
+
+         <div class="page-wrapper">
+            <div class="content container-fluid">
+               <div class="page-header">
+                  <div class="row align-items-center">
+                     <div class="col">
+                        <h3 class="page-title">Edit Students</h3>
+                        <ul class="breadcrumb">
+                           <li class="breadcrumb-item"><a href="students.html">Students</a></li>
+                           <li class="breadcrumb-item active">Edit Students</li>
+                        </ul>
+
+                            <!-- error and message -->
+                            <div class="alert alert-warning alert-dismissible fade show" id="alert" style="display:none;" role="alert">
+                              <strong>Erros:</strong>
+                               <div id="error"></div>
+      
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <!-- error and messages -->
+      
+                       <!-- alert success -->
+                       <div class="alert alert-success" role="alert" id="alert_success" style="display:none;">
+                        <h4 class="alert-heading">Well done!</h4>
+                        <p>Aww yeah, you successfully update the profile.</p>
+                        <hr>
+                      </div>
+      
+                       <!-- alert success end -->
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="card">
+                        <div class="card-body" id="edite_form">
+                           
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+      <!-- main section ends -->
+
+      </div>
+      <script src="assets/js/jquery-3.6.0.min.js"></script>
+      <script src="assets/js/popper.min.js"></script>
+      <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+      <script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+      <script src="assets/js/script.js"></script>
+   </body>
+</html>
+
+
+<script>
+    function _(element){
+       return document.getElementById(element);
+   }
+   window.addEventListener('load',()=>{
+      var studentId = sessionStorage.getItem("studentId");
+      var data = {};
+      data.student_id=studentId;
+   send_data(data,"editStudent");
+})
+
+    // sending data
+    function send_data(data,type){
+      var xml = new XMLHttpRequest();
+      xml.onload = function(){
+         if(xml.status == 200 || xml.readyState == 4){
+            handle_result(xml.responseText);
+          
+
+         }
+      }
+      data.data_type = type;
+      var data_string= JSON.stringify(data);
+      xml.open("POST","api.php",true);
+      xml.send(data_string);
+
+   }
+
+
+   // handle the result
+   function handle_result(result){
+
+       var data =JSON.parse(result);
+       if(data.data_type == "edit_student"){
+         var card_body = _("edite_form");
+         card_body.innerHTML = data.massege;
+      }
+      if(data.data_type == "info"){
+         var card_body = _("edite_form");
+         var message =_("alert_success");
+         message.style.display= "block";      }
+      if(data.data_type == "error"){
+         var error = _("error");
+           var message =_("alert");
+           message.style.display= "block";
+           console.log(data);
+           error.innerHTML = data.massege;
+           error.style.display = "block";
+      }
+        
+
+      
+
+   }
+
+
+     // collecting student data
+
+
+   
+      function collect_data(e){
+       e.preventDefault();
+
+       const formdata= form.getElementsByTagName('INPUT');
+        var data= {};
+
+       
+       for (var i = 0; i < formdata.length; i++) {
+          var key  = formdata[i].name;
+          switch(key){
+               
+               case"firstname":
+               data.fname =formdata[i].value;
+               break;
+               case"lastname":
+               data.lname =formdata[i].value;
+               break;
+               case"email":
+               data.email =formdata[i].value;
+               break;
+               case"status":
+               data.status =formdata[i].value;
+               break;
+               case"spouse":
+               data.spouse =formdata[i].value;
+               break;
+               case"address":
+               data.address =formdata[i].value;
+               break;
+                case"date":
+               data.date =formdata[i].value;
+               break;
+               case"gender":
+               if(formdata[i].checked){
+                   data.gender =formdata[i].value;
+
+               }
+               break;
+           }
+       }
+      var studentId = sessionStorage.getItem("studentId");
+      data.student_id=studentId;
+      send_data(data,"updateStudent");
+              
+   }
+</script>
